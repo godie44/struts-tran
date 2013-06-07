@@ -1,0 +1,33 @@
+/* 
+    Document   : cssActas
+    Created on : 18/10/2012, 01:28:48 AM
+    Author     : diego
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+#contenido{
+    width: 800px;
+    height: auto;
+    margin: auto;
+}
+
+#header{
+    height: 148px;
+    width: 800px;
+   /* background-color: grey;*/
+    text-align: center;    
+    background-image: url('img/header.png');
+}
+
+#menu{
+    width: 800px;
+    height: 25px;
+    background-color: lightsteelblue
+    
+}
+

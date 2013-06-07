@@ -1,0 +1,247 @@
+--
+-- PostgreSQL database dump
+--
+
+-- Dumped from database version 9.1.8
+-- Dumped by pg_dump version 9.1.8
+-- Started on 2013-02-14 01:23:37 CST
+
+SET statement_timeout = 0;
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+SET check_function_bodies = false;
+SET client_min_messages = warning;
+
+--
+-- TOC entry 165 (class 3079 OID 11716)
+-- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
+--
+
+CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
+
+
+--
+-- TOC entry 1956 (class 0 OID 0)
+-- Dependencies: 165
+-- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
+--
+
+COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
+
+
+SET search_path = public, pg_catalog;
+
+SET default_tablespace = '';
+
+SET default_with_oids = false;
+
+--
+-- TOC entry 162 (class 1259 OID 16393)
+-- Dependencies: 5
+-- Name: tarjetas; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE tarjetas (
+    numero text NOT NULL,
+    cedula text,
+    fechavencimiento date,
+    fechaemision date,
+    limite numeric
+);
+
+
+ALTER TABLE public.tarjetas OWNER TO postgres;
+
+--
+-- TOC entry 163 (class 1259 OID 16401)
+-- Dependencies: 5
+-- Name: transacciones; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE transacciones (
+    tipo text,
+    tarjeta text,
+    fecha date,
+    descripcion text,
+    id integer NOT NULL,
+    monto double precision
+);
+
+
+ALTER TABLE public.transacciones OWNER TO postgres;
+
+--
+-- TOC entry 164 (class 1259 OID 16430)
+-- Dependencies: 5 163
+-- Name: transacciones_ID_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+--
+
+CREATE SEQUENCE "transacciones_ID_seq"
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public."transacciones_ID_seq" OWNER TO postgres;
+
+--
+-- TOC entry 1957 (class 0 OID 0)
+-- Dependencies: 164
+-- Name: transacciones_ID_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+--
+
+ALTER SEQUENCE "transacciones_ID_seq" OWNED BY transacciones.id;
+
+
+--
+-- TOC entry 161 (class 1259 OID 16385)
+-- Dependencies: 5
+-- Name: usuario; Type: TABLE; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE TABLE usuario (
+    cedula text NOT NULL,
+    nombre text,
+    apellido1 text,
+    apellido2 text,
+    password text
+);
+
+
+ALTER TABLE public.usuario OWNER TO postgres;
+
+--
+-- TOC entry 1935 (class 2604 OID 16432)
+-- Dependencies: 164 163
+-- Name: id; Type: DEFAULT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY transacciones ALTER COLUMN id SET DEFAULT nextval('"transacciones_ID_seq"'::regclass);
+
+
+--
+-- TOC entry 1946 (class 0 OID 16393)
+-- Dependencies: 162 1949
+-- Data for Name: tarjetas; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY tarjetas (numero, cedula, fechavencimiento, fechaemision, limite) FROM stdin;
+123456789123456	304360158	2010-01-01	2016-01-01	0
+4343565676569988	304360158	2012-01-01	2018-01-01	1000000
+4343565676569675	304440195	2012-01-01	2018-01-01	1500000
+\.
+
+
+--
+-- TOC entry 1947 (class 0 OID 16401)
+-- Dependencies: 163 1949
+-- Data for Name: transacciones; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY transacciones (tipo, tarjeta, fecha, descripcion, id, monto) FROM stdin;
+1	123456789123456	2013-02-14	Paguillo	1	15000
+\.
+
+
+--
+-- TOC entry 1958 (class 0 OID 0)
+-- Dependencies: 164
+-- Name: transacciones_ID_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+--
+
+SELECT pg_catalog.setval('"transacciones_ID_seq"', 1, true);
+
+
+--
+-- TOC entry 1945 (class 0 OID 16385)
+-- Dependencies: 161 1949
+-- Data for Name: usuario; Type: TABLE DATA; Schema: public; Owner: postgres
+--
+
+COPY usuario (cedula, nombre, apellido1, apellido2, password) FROM stdin;
+304360158	Diego	Martinez	Gonzalez	123456
+304440195	Fiorela	Suarez	Cordero	123456
+305320515	Camila	Martinez	Suarez	123456
+305320516	Tamaraa	Martinez	Suarez	123456
+\.
+
+
+--
+-- TOC entry 1942 (class 2606 OID 16440)
+-- Dependencies: 163 163 1950
+-- Name: PK_TRANSACCIONES; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY transacciones
+    ADD CONSTRAINT "PK_TRANSACCIONES" PRIMARY KEY (id);
+
+
+--
+-- TOC entry 1940 (class 2606 OID 16400)
+-- Dependencies: 162 162 1950
+-- Name: TARJETAS_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY tarjetas
+    ADD CONSTRAINT "TARJETAS_pkey" PRIMARY KEY (numero);
+
+
+--
+-- TOC entry 1937 (class 2606 OID 16392)
+-- Dependencies: 161 161 1950
+-- Name: usuario_pkey; Type: CONSTRAINT; Schema: public; Owner: postgres; Tablespace: 
+--
+
+ALTER TABLE ONLY usuario
+    ADD CONSTRAINT usuario_pkey PRIMARY KEY (cedula);
+
+
+--
+-- TOC entry 1938 (class 1259 OID 16429)
+-- Dependencies: 162 1950
+-- Name: FKI_Tarjeta_Usuario-Cedula; Type: INDEX; Schema: public; Owner: postgres; Tablespace: 
+--
+
+CREATE INDEX "FKI_Tarjeta_Usuario-Cedula" ON tarjetas USING btree (cedula);
+
+
+--
+-- TOC entry 1943 (class 2606 OID 16424)
+-- Dependencies: 162 1936 161 1950
+-- Name: FK_Tarjeta_Usuario-Cedula; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY tarjetas
+    ADD CONSTRAINT "FK_Tarjeta_Usuario-Cedula" FOREIGN KEY (cedula) REFERENCES usuario(cedula);
+
+
+--
+-- TOC entry 1944 (class 2606 OID 16419)
+-- Dependencies: 162 163 1939 1950
+-- Name: TRANSACCIONES_TARJETA_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
+--
+
+ALTER TABLE ONLY transacciones
+    ADD CONSTRAINT "TRANSACCIONES_TARJETA_fkey" FOREIGN KEY (tarjeta) REFERENCES tarjetas(numero);
+
+
+--
+-- TOC entry 1955 (class 0 OID 0)
+-- Dependencies: 5
+-- Name: public; Type: ACL; Schema: -; Owner: postgres
+--
+
+REVOKE ALL ON SCHEMA public FROM PUBLIC;
+REVOKE ALL ON SCHEMA public FROM postgres;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO PUBLIC;
+
+
+-- Completed on 2013-02-14 01:23:37 CST
+
+--
+-- PostgreSQL database dump complete
+--
+

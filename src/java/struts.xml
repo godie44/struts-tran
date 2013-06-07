@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+   <!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts> 
+    <constant name="struts.devMode" value="true"></constant>  
+    <package name="transacciones" extends="struts-default">
+        
+        <action name="validar" class="transacciones.controller.ClientesController" method="Valida">
+            <result name="exito">/View/inicio.jsp</result>
+            <result name="error">/View/index.jsp</result>
+        </action>
+        <action name="getTarjetas" class="transacciones.controller.ClientesController" method="irSaldos">
+            <result name="fin">/View/saldo.jsp</result>
+        </action>
+        <action name="listaTarjetas" class="transacciones.controller.ClientesController" method="ListaTarjetas">
+            <result name="fin">/View/movimientos.jsp</result>
+        </action>
+        
+        
+        <action name="irdepositar" class="transacciones.controller.ClientesController" method="execute">
+            <result name="fin">/View/depositos.jsp</result>
+        </action>
+        
+        <action name="irretirar" class="transacciones.controller.ClientesController" method="execute">
+            <result name="fin">/View/retiros.jsp</result>
+        </action>
+        
+        <action name="irservicios" class="transacciones.controller.ClientesController" method="execute">
+            <result name="fin">/View/pagoservicios.jsp</result>
+        </action>
+        
+        <action name="depositar" class="transacciones.controller.ClientesController" method="Depositar">
+            <result name="fin">/View/inicio.jsp</result>
+        </action>
+        
+        <action name="retirar" class="transacciones.controller.ClientesController" method="Retirar">
+            <result name="fin">/View/inicio.jsp</result>
+        </action>
+        
+        <action name="verificar" class="transacciones.controller.ClientesController" method="execute">
+            <result name="fin">/View/viewDetalleServicio.jsp</result>
+        </action>
+        
+        <action name="consultar" class="transacciones.controller.ClientesController" method="execute">
+            <result name="fin">/View/viewDetalleServicio.jsp</result>
+        </action>
+        
+        <action name="pagar" class="transacciones.controller.ClientesController" method="Pagar">
+            <result name="fin">/View/inicio.jsp</result>
+        </action>
+        
+    </package>
+</struts>

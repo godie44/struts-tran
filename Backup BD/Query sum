@@ -1,0 +1,1 @@
+select sum(a.monto)-sum(b.monto) from Transacciones a, Transacciones b where a.tarjetas.numero = '123456789123456' and b.tarjetas.numero='123456789123456' and b.tipo!='1' and a.tipo='1' 

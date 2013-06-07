@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 18/02/2013 02:39:37 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="transacciones.model.Recibos" table="recibos" schema="public">
+        <id name="id" type="int">
+            <column name="id" />
+            <generator class="assigned" />
+        </id>
+        <property name="tipo" type="string">
+            <column name="tipo" />
+        </property>
+        <property name="fecha1" type="date">
+            <column name="fecha1" length="13" />
+        </property>
+        <property name="fecha2" type="date">
+            <column name="fecha2" length="13" />
+        </property>
+        <property name="estado" type="string">
+            <column name="estado" />
+        </property>
+        <property name="cedula" type="string">
+            <column name="cedula" />
+        </property>
+        <property name="monto" type="string">
+            <column name="monto" />
+        </property>
+    </class>
+</hibernate-mapping>

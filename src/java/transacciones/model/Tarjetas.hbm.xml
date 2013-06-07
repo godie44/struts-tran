@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 18/02/2013 02:39:37 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="transacciones.model.Tarjetas" table="tarjetas" schema="public">
+        <id name="numero" type="string">
+            <column name="numero" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="usuario" class="transacciones.model.Usuario" fetch="select">
+            <column name="cedula" />
+        </many-to-one>
+        <property name="fechavencimiento" type="date">
+            <column name="fechavencimiento" length="13" />
+        </property>
+        <property name="fechaemision" type="date">
+            <column name="fechaemision" length="13" />
+        </property>
+        <property name="limite" type="big_decimal">
+            <column name="limite" precision="131089" scale="0" />
+        </property>
+        <set name="transaccioneses" inverse="true">
+            <key>
+                <column name="tarjeta" />
+            </key>
+            <one-to-many class="transacciones.model.Transacciones" />
+        </set>
+    </class>
+</hibernate-mapping>

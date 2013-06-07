@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 18/02/2013 02:39:37 PM by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+    <class name="transacciones.model.Usuario" table="usuario" schema="public">
+        <id name="cedula" type="string">
+            <column name="cedula" />
+            <generator class="assigned" />
+        </id>
+        <property name="nombre" type="string">
+            <column name="nombre" />
+        </property>
+        <property name="apellido1" type="string">
+            <column name="apellido1" />
+        </property>
+        <property name="apellido2" type="string">
+            <column name="apellido2" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" />
+        </property>
+        <set name="tarjetases" inverse="true">
+            <key>
+                <column name="cedula" />
+            </key>
+            <one-to-many class="transacciones.model.Tarjetas" />
+        </set>
+    </class>
+</hibernate-mapping>
